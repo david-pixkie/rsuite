@@ -11,7 +11,7 @@ export interface PredefinedRangesProps<T = any, Shortcut = T> extends StackProps
   calendarDate: T;
   locale: CalendarLocale;
   disabledShortcut?: (value: T) => boolean;
-  onClickShortcut?: (value: Shortcut, closeOverlay: boolean, event: React.MouseEvent) => void;
+  onClickShortcut?: (value: Shortcut, closeOverlay: boolean, event: React.MouseEvent, label:string) => void;
 }
 
 const PredefinedRanges = React.forwardRef<HTMLDivElement, PredefinedRangesProps>((props, ref) => {
@@ -48,7 +48,7 @@ const PredefinedRanges = React.forwardRef<HTMLDivElement, PredefinedRangesProps>
           if (disabled) {
             return;
           }
-          onClickShortcut?.(value, closeOverlay !== false ? true : false, event);
+          onClickShortcut?.(value, closeOverlay !== false ? true : false, event,label);
         };
 
         return (

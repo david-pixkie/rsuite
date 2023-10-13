@@ -384,12 +384,18 @@ const DateRangePicker: DateRangePicker = React.forwardRef((props: DateRangePicke
   );
 
   const handleValueUpdate = useCallback(
-    (event: React.SyntheticEvent, nextValue: DateRange | null, closeOverlay = true) => {
+    (event: React.SyntheticEvent, nextValue: DateRange | null, closeOverlay = true,label:string) => {
       // If nextValue is null, it means that the user is erasing the selected dates.
       setSelectedDates(nextValue ?? []);
 
       if (!isSameRange(nextValue, value, formatStr)) {
-        setValue(nextValue);
+        if(label == 'Today'){
+          setValue('Today')
+        }else if(label == 'Yesterday'){
+          setValue('Yesterday')
+        }else {
+          setValue(nextValue);
+        }
         onChange?.(nextValue, event);
       }
 
@@ -593,11 +599,11 @@ const DateRangePicker: DateRangePicker = React.forwardRef((props: DateRangePicke
    * Toolbar operation callback function
    */
   const handleShortcutPageDate = useCallback(
-    (value: DateRange, closeOverlay = false, event: React.SyntheticEvent) => {
+    (value: DateRange, closeOverlay = false, event: React.SyntheticEvent,label:string) => {
       updateCalendarDateRange({ dateRange: value });
 
       if (closeOverlay) {
-        handleValueUpdate(event, value, closeOverlay);
+        handleValueUpdate(event, value, closeOverlay,label);
       } else {
         setSelectedDates(value ?? []);
       }
